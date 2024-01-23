@@ -13,6 +13,9 @@ const renderSystemEl = document.querySelector("#renderSystem");
 const totalRaces = [1, 2, 3, 4, 5, 6, 7];
 const numberOfHorses = [2, 3, 4, 5];
 
+const shuffleIndex = [...totalRaces]
+
+
 let firstRace = [];
 let secondRace = [];
 let thirdRace = [];
@@ -51,66 +54,63 @@ formEl.addEventListener("submit", (e) => {
 });
 
 const generateSystem = () => {
-    const shuffleIndex = [...totalRaces]
-    shuffleArray(shuffleIndex);
-
-    const findNails = (arr, num) => { 
-        const inputNails = inputNailEl.value;
-        const nails = shuffleIndex.slice(0, inputNails); 
-        if(nails.includes(num)){
-            while( arr.length > 1) {
-                arr.pop();
-            }
-        } 
-    }
-
+    
     //gör om till en funktion
-    const firstSpread = [...firstRace];
-    shuffleArray(firstSpread);
-    firstRace = firstSpread.splice(0, 6);
-    randomNumberOfHorses(firstRace);
-    findNails(firstRace, 1);
+    firstRace = getHorses(firstRace, 1);
+    secondRace = getHorses(secondRace, 2);
+    thirdRace =getHorses(thirdRace, 3);
+    fourthRace = getHorses(fourthRace, 4);
+    fifthRace = getHorses(fifthRace, 5);
+    sixthRace = getHorses(sixthRace, 6);
+    seventhRace =getHorses(seventhRace, 7);
+    eightysixRace = getHorses(eightysixRace, 0);
 
-    const secondSpread = [...secondRace];
-    shuffleArray(secondSpread);
-    secondRace = secondSpread.splice(0, 6);
-    randomNumberOfHorses(secondRace);
-    findNails(secondRace, 2);
+    // const firstSpread = [...firstRace];
+    // shuffleArray(firstSpread);
+    // firstRace = firstSpread.splice(0, 6);
+    // randomNumberOfHorses(firstRace);
+    // findNails(firstRace, 1);
 
-    const thirdSpread = [...thirdRace];
-    shuffleArray(thirdSpread);
-    thirdRace = thirdSpread.splice(0, 6);
-    randomNumberOfHorses(thirdRace);
-    findNails(thirdRace, 3);
+    // const secondSpread = [...secondRace];
+    // shuffleArray(secondSpread);
+    // secondRace = secondSpread.splice(0, 6);
+    // randomNumberOfHorses(secondRace);
+    // findNails(secondRace, 2);
 
-    const fourthSpread = [...fourthRace];
-    shuffleArray(fourthSpread);
-    fourthRace = fourthSpread.splice(0, 6);
-    randomNumberOfHorses(fourthRace);
-    findNails(fourthRace, 4);    
+    // const thirdSpread = [...thirdRace];
+    // shuffleArray(thirdSpread);
+    // thirdRace = thirdSpread.splice(0, 6);
+    // randomNumberOfHorses(thirdRace);
+    // findNails(thirdRace, 3);
 
-    const fifthSpread = [...fifthRace];
-    shuffleArray(fifthSpread);
-    fifthRace = fifthSpread.splice(0, 6);
-    randomNumberOfHorses(fifthRace); 
-    findNails(fifthRace, 5);
+    // const fourthSpread = [...fourthRace];
+    // shuffleArray(fourthSpread);
+    // fourthRace = fourthSpread.splice(0, 6);
+    // randomNumberOfHorses(fourthRace);
+    // findNails(fourthRace, 4);    
 
-    const sixthSpread = [...sixthRace];
-    shuffleArray(sixthSpread);
-    sixthRace = sixthSpread.splice(0, 6);
-    randomNumberOfHorses(sixthRace); 
-    findNails(sixthRace, 6);
+    // const fifthSpread = [...fifthRace];
+    // shuffleArray(fifthSpread);
+    // fifthRace = fifthSpread.splice(0, 6);
+    // randomNumberOfHorses(fifthRace); 
+    // findNails(fifthRace, 5);
 
-    const seventhSpread = [...seventhRace];
-    shuffleArray(seventhSpread);
-    seventhRace = seventhSpread.splice(0, 6);
-    randomNumberOfHorses(seventhRace);
-    findNails(seventhRace, 7) 
+    // const sixthSpread = [...sixthRace];
+    // shuffleArray(sixthSpread);
+    // sixthRace = sixthSpread.splice(0, 6);
+    // randomNumberOfHorses(sixthRace); 
+    // findNails(sixthRace, 6);
 
-    const eightysixSpread = [...eightysixRace];
-    shuffleArray(eightysixSpread);
-    eightysixRace = eightysixSpread.splice(0, 6);
-    randomNumberOfHorses(eightysixRace);
+    // const seventhSpread = [...seventhRace];
+    // shuffleArray(seventhSpread);
+    // seventhRace = seventhSpread.splice(0, 6);
+    // randomNumberOfHorses(seventhRace);
+    // findNails(seventhRace, 7) 
+
+    // const eightysixSpread = [...eightysixRace];
+    // shuffleArray(eightysixSpread);
+    // eightysixRace = eightysixSpread.splice(0, 6);
+    // randomNumberOfHorses(eightysixRace);
 
     renderSystem();
 }
@@ -125,13 +125,15 @@ const shuffleArray = (array) => {
 	}
 }
 
+shuffleArray(shuffleIndex);
+
 const renderSystem = () => {
     formEl.innerHTML = "";
     if(eightysixRace.length === 0) {
         renderSystemEl.innerHTML = `
         <div class="container mt-3">
             <div class="container">
-                <h2 class="mb-3">ditt_system:</h2>
+                <h2 class="mb-4">ditt_<span class="v75-system">v75</span>_system:</h2>
                 <div class="border mx-auto">
                     <div class="container ms-3 mt-3">
                         <p class="text-warning">lopp_1: <span class="p-3 text-light">${firstRace.join(', ')}</span></p>
@@ -145,8 +147,8 @@ const renderSystem = () => {
                 </div>
             </div>
         </div>    
-        <div class="text-center mt-3">
-            <button type="submit" id="restart" class="btn btn-success mt-3 text-center">tillbaka_</button>
+        <div class="text-center mt-4">
+            <button type="submit" id="restart" class="btn btn-success text-center">tillbaka_</button>
         </div>
         <div class="container text-center mt-3 mb-5">
             <p>horse_random&copy 2024</p>
@@ -156,7 +158,7 @@ const renderSystem = () => {
         renderSystemEl.innerHTML = `
         <div class="container mt-3">
             <div class="container">
-                <h2 class="mb-3">ditt_system:</h2>
+                <h2 class="mb-4">ditt_<span class="v86-system">v86</span>_system:</h2>
                 <div class="border mx-auto">
                     <div class="container ms-3 mt-3">
                         <p class="text-warning">lopp_1: <span class="p-3 text-light">${firstRace.join(', ')}</span></p>
@@ -171,8 +173,8 @@ const renderSystem = () => {
                 </div>
             </div>
         </div>    
-        <div class="text-center mt-3">
-            <button type="submit" id="restart" class="btn btn-success mt-3 text-center">tillbaka_</button>
+        <div class="text-center mt-4">
+            <button type="submit" id="restart" class="btn btn-success text-center">tillbaka_</button>
         </div>
         <div class="container text-center mt-3 mb-5">
             <p>horse_random&copy 2024</p>
@@ -208,11 +210,11 @@ const randomNumberOfHorses = (arr) => {
     const roll = [...numberOfHorses];
     shuffleArray(roll);
     if(roll[0] === 2) {
-        arr.splice(0, 4);
-        return;
+        arr = arr.splice(0, 4);
+        return arr;
     } else if(roll[0] === 3) {
         arr.splice(0, 3);
-        return;
+        return arr;
     } else if(roll[0] === 4) {
         arr.splice(0, 2);
         return;
@@ -220,8 +222,29 @@ const randomNumberOfHorses = (arr) => {
         arr.pop();
         return;
     }
+    
 }
 
+const getHorses = (arr, num) => {
+    const spread = [...arr];
+    shuffleArray(spread);
+    arr = spread.splice(0, 6);
+    randomNumberOfHorses(arr);
+    if(num !== 0) {
+        findNails(arr, num);
+    }
+    return arr; 
+}
+
+const findNails = (arr, num) => { 
+    const inputNails = inputNailEl.value;
+    const nails = shuffleIndex.slice(0, inputNails); 
+    if(nails.includes(num)){
+        while( arr.length > 1) {
+            arr.pop();
+        }
+    } 
+}
 
 
 
